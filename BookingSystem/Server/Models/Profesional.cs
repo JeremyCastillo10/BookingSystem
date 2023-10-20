@@ -24,4 +24,5 @@ namespace BookingSystem.Server.Models
 
 
     }
+
 }
