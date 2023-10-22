@@ -22,6 +22,8 @@ namespace BookingSystem.Server.Models
         [ForeignKey("HorarioId")]
         public virtual Horario ?Horario { get; set; }
 
+        public bool Estado { get; set; }
+
 
     }
 
