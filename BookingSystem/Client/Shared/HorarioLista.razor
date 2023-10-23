@@ -1,0 +1,25 @@
+﻿@using BookingSystem.Server.Models;
+@inject HttpClient Http
+
+<h3>HorarioLista</h3>
+<ul class="list-unstyled">
+    @foreach(var hor in Horarios)
+    {
+        <li class="oi-media-pause my-3">
+            <p>@hor.Dia</p>
+        </li>
+    }
+</ul>
+
+@code {
+    private static List<Horario> Horarios = new List<Horario>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await Http.GetFromJsonAsync<List<Horario>>("api/Horario");
+        if (result != null)
+            Horarios = result;
+            
+    }
+
+}
