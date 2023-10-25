@@ -12,8 +12,10 @@ builder.Services.AddRazorPages();
 builder.Services.AddDbContext<Contexto>(option => {
     option.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
 });
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+app.UseSwaggerUI();
 
 
 // Configure the HTTP request pipeline.
@@ -27,7 +29,7 @@ else
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-
+app.UseSwagger();
 app.UseHttpsRedirection();
 
 app.UseBlazorFrameworkFiles();
