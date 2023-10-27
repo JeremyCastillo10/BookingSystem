@@ -1,4 +1,4 @@
-﻿namespace BookingSystem.Server.Models
+﻿namespace BookingSystem.Shared.Models
 {
     public class Cliente
     {

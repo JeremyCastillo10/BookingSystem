@@ -1,4 +1,4 @@
-global using BookingSystem.Shared;
+global using BookingSystem.Shared.Models;
 using BookingSystem.Server.Data;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;

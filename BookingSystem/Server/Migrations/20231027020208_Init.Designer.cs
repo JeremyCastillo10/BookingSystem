@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookingSystem.Server.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20231022171725_ini")]
-    partial class ini
+    [Migration("20231027020208_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,7 +24,7 @@ namespace BookingSystem.Server.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("BookingSystem.Server.Models.Horario", b =>
+            modelBuilder.Entity("BookingSystem.Shared.Models.Horario", b =>
                 {
                     b.Property<int>("HorarioId")
                         .ValueGeneratedOnAdd()

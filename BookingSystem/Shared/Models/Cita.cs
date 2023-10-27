@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BookingSystem.Server.Models
+namespace BookingSystem.Shared.Models
 {
     public class Cita
     {

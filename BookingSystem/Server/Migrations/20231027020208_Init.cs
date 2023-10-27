@@ -5,7 +5,7 @@
 namespace BookingSystem.Server.Migrations
 {
     /// <inheritdoc />
-    public partial class ini : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

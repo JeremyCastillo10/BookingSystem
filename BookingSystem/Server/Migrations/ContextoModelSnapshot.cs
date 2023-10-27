@@ -21,7 +21,7 @@ namespace BookingSystem.Server.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("BookingSystem.Server.Models.Horario", b =>
+            modelBuilder.Entity("BookingSystem.Shared.Models.Horario", b =>
                 {
                     b.Property<int>("HorarioId")
                         .ValueGeneratedOnAdd()

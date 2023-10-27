@@ -1,25 +1,32 @@
-﻿@using BookingSystem.Server.Models;
-@inject HttpClient Http
+﻿@inject IHorarioRepositorio HorarioRepo
+
 
 <h3>HorarioLista</h3>
+
+@if(horarios == null || horarios.Count() == 0)
+{
+    <p>No hay.....</p>
+}
+else{
 <ul class="list-unstyled">
-    @foreach(var hor in Horarios)
+    
+    @foreach(var hor in horarios)
     {
-        <li class="oi-media-pause my-3">
-            <p>@hor.Dia</p>
-        </li>
+       
+            <li class="oi-media-pause my-3">
+                <p>@hor.HorarioId</p>
+                <h1>@hor.HoraFin</h1>
+            </li>
+        
     }
 </ul>
-
+}
 @code {
-    private static List<Horario> Horarios = new List<Horario>();
+    private List<Horario> horarios = new List<Horario>();
 
     protected override async Task OnInitializedAsync()
     {
-        var result = await Http.GetFromJsonAsync<List<Horario>>("api/Horario");
-        if (result != null)
-            Horarios = result;
-            
+        horarios = await HorarioRepo.GetHorario();
     }
 
 }

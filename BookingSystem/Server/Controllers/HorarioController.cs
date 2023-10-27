@@ -1,5 +1,5 @@
 ﻿using BookingSystem.Server.Data;
-using BookingSystem.Server.Models;
+using BookingSystem.Shared.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -20,9 +20,18 @@ namespace BookingSystem.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<ActionResult<List<Horario>>> GetHorario()
         {
-            return Ok(await _contexto.Horario.ToListAsync());
+            var horario = await _contexto.Horario.ToListAsync();
+            return Ok(horario);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<Horario>> PostHorario(Horario horario)
+        {
+            _contexto.Add(horario);
+            await _contexto.SaveChangesAsync();
+            return Ok(horario);
         }
     }
 }
