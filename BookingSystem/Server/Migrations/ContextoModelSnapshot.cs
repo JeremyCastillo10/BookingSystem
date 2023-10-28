@@ -29,9 +29,6 @@ namespace BookingSystem.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("HorarioId"));
 
-                    b.Property<bool>("Deleted")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Dia")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -50,6 +47,36 @@ namespace BookingSystem.Server.Migrations
                     b.HasKey("HorarioId");
 
                     b.ToTable("Horario");
+                });
+
+            modelBuilder.Entity("BookingSystem.Shared.Models.Profesional", b =>
+                {
+                    b.Property<int>("ProfesionalId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProfesionalId"));
+
+                    b.Property<string>("Especialidad")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Estado")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("HorarioId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NombreCompleto")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Visible")
+                        .HasColumnType("bit");
+
+                    b.HasKey("ProfesionalId");
+
+                    b.ToTable("Profesional");
                 });
 #pragma warning restore 612, 618
         }
