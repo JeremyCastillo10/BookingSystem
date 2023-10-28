@@ -1,0 +1,67 @@
+﻿@page "/R_Profesionales"
+@inject IProfesionalRepositorio ProfesionalRepo;
+@inject IHorarioRepositorio HorarioRepo;
+
+<EditForm Model="Profesional" OnSubmit="Guardar">
+    <div class="form-group row">
+        <div class="border p-3 w-75" style="margin: 0 auto; width: 50%;">
+            <h2 class="text-info pl-3">Registro Profesionales</h2>
+            <div class="row">
+                <div class="container">
+                    <div class="mb-3">
+                        <label>Id</label>
+                        <InputNumber @bind-Value="Profesional.ProfesionalId" class="form-control" />
+                    </div>
+                    <div>
+                        <button type="button"
+                                class="btn btn-primary input-group-text oi oi-magnifying-glass">
+                            Buscar
+                        </button>
+                    </div>
+                    <div class="mb-3">
+                        <label>Nombre</label>
+                        <InputText @bind-Value="Profesional.NombreCompleto" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label>Especialidad</label>
+                        <InputText @bind-Value="Profesional.Especialidad" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label>Horario</label>
+                        <InputSelect @bind-Value="Profesional.HorarioId" class="form-select text-14">
+                            @foreach (var horario in  horarios)
+                            {
+                                <option value="@horario.HorarioId">@horario.Dia</option>
+                            }
+                        </InputSelect>
+                    </div>
+
+
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button class="btn btn-danger" >Borrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    public Profesional Profesional { get; set; } = new Profesional();
+    public List<Horario> horarios = new List<Horario>();
+    public int HorarioId { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        horarios = await HorarioRepo.GetHorario();
+    }
+
+    public async Task Guardar()
+    {
+        await ProfesionalRepo.CreateProfesional(Profesional);
+        Nuevo();
+
+    }
+    public void Nuevo()
+    {
+        Profesional = new Profesional();
+    }
+}
