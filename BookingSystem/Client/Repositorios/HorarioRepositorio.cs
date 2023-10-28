@@ -30,15 +30,10 @@ namespace BookingSystem.Client.Repositorios
 
         public async Task<bool> DeleteHorario(int id)
         {
-            try
-            {
-                HttpResponseMessage response = await _http.DeleteAsync($"api/Horario/{id}"); // Ajusta la URL según tu API.
+
+                var response = await _http.DeleteAsync($"api/Horario/{id}"); // Ajusta la URL según tu API.
                 return response.IsSuccessStatusCode;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+
         }
 
 
