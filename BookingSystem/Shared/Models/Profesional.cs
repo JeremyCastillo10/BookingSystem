@@ -8,22 +8,15 @@ namespace BookingSystem.Shared.Models
         [Key]
         public int ProfesionalId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Campo Obligatorio")]
         public string NombreCompleto { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Campo Obligatorio")]
         public string Especialidad { get; set; }
-
-        public int ServicioId { get; set; }
-        [ForeignKey("ServicioId")]
-        public virtual Servicio? Servicio { get; set; }
-
+        [Required(ErrorMessage = "Campo Obligatorio")]
         public int HorarioId { get; set; }
-        [ForeignKey("HorarioId")]
-        public virtual Horario ?Horario { get; set; }
-
         public bool Estado { get; set; }
-
+        public bool Visible { get; set; } = true;
 
     }
 
