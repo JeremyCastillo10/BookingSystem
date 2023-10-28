@@ -1,0 +1,62 @@
+﻿@inject IProfesionalRepositorio ProfesionalRepo
+
+
+@page "/C_Profesionales"
+<h3>Consulta Profesionales</h3>
+
+@if (profesionales == null || profesionales.Count() == 0)
+{
+    <p>Cargando...</p>
+}
+else
+{
+    <div class="container p-3">
+        <div class="row pt-4">
+            <div class="col-6"></div>
+        </div>
+        <div class="container border">
+            <h2 class="text-primary">Lista de Profesionales</h2>
+            <table class="table table-bordered table-striped" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Especialidad</th>
+                        <th>HorarioId</th>
+                        <th width="30">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var pro in profesionales)
+                    {
+                        if (pro.Visible == true)
+                        {
+                            <tr>
+                                <td>@pro.NombreCompleto</td>
+                                <td>@pro.Especialidad</td>
+                                <td>@pro.HorarioId</td>
+                                <td class="text-center">
+                                    <div class="w-30 btn-group">
+                                        <a><i class="fa-solid fa-pen-to-square"></i></a>
+                                        <a class="btn btn-sm btn-outline-primary oi oi-eye" href="R_Profesionales/@pro.ProfesionalId">Ver</a>
+                                    </div>
+                                </td>
+
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+}
+@code {
+    private List<Profesional> profesionales = new List<Profesional>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        profesionales = await ProfesionalRepo.GetProfesional();
+    }
+
+}
+
