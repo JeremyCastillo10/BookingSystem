@@ -3,33 +3,47 @@
 @inject IHorarioRepositorio HorarioRepo;
 <EditForm Model="horario" OnValidSubmit="Guardar">
     <div class="mb-3">
-        <label >Id</label>
+        <label>Id</label>
         <InputNumber @bind-Value="horario.HorarioId" class="form-control" />
     </div>
+    <div>
+        <button type="button"
+                class="btn btn-primary input-group-text oi oi-magnifying-glass"
+        @onclick="Buscar">
+            Buscar
+        </button>
+    </div>
     <div class="mb-3">
-        <label for="lastname">Dia</label>
+        <label>Día</label>
         <InputSelect @bind-Value="horario.Dia" class="form-select text-14">
-            @foreach(var dias in DiasSemana)
+            @foreach (var dia in DiasSemana)
             {
-                <option value="@dias">@dias</option>
+                <option value="@dia">@dia</option>
             }
         </InputSelect>
     </div>
     <div class="mb-3">
-        <label >Hora Inicio</label>
+        <label>Hora Inicio</label>
         <InputText @bind-Value="horario.HoraInicio" class="form-control" />
     </div>
     <div class="mb-3">
-        <label >Hora Fin</label>
-        <InputText  @bind-Value="horario.HoraFin" class="form-control" />
+        <label>Hora Fin</label>
+        <InputText @bind-Value="horario.HoraFin" class="form-control" />
     </div>
 
     <button type="submit" class="btn btn-primary">Guardar</button>
+    <button class="btn btn-danger" @onclick="Eliminar">Borrar</button>
 </EditForm>
+@if (eliminado)
+{
+    <p>El horario ha sido eliminado con éxito.</p>
+}
+
 @code {
     [Parameter]
     public int HorarioId { get; set; }
-    List<string> DiasSemana = new List<string> { "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado" };
+    private bool eliminado = false;
+    List<string> DiasSemana = new List<string> { "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado" };
     private Horario horario = new Horario();
     protected override async Task OnInitializedAsync()
     {
@@ -38,9 +52,26 @@
             horario = await HorarioRepo.GetHorarioPorIdAsync(HorarioId);
         }
     }
-
-    public async Task Guardar()
+    private async Task Guardar()
     {
         await HorarioRepo.CreateHorario(horario);
+    }
+
+    private async Task Buscar()
+    {
+        horario = await HorarioRepo.GetHorarioPorIdAsync(horario.HorarioId);
+    }
+
+    private async Task Eliminar()
+    {
+
+        if (horario != null)
+        {
+            eliminado = await HorarioRepo.DeleteHorario(horario.HorarioId);
+            if (eliminado)
+            {
+                // Realizar alguna acción después de la eliminación exitosa
+            }
+        }
     }
 }

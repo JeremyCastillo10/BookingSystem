@@ -26,6 +26,8 @@ else{
                     <tbody>
                         @foreach (var hora in horarios)
                         {
+                            if(hora.Visible == true)
+                            {
                             <tr>
                             <td>@hora.HorarioId</td>
                                 <td>@hora.Dia</td>
@@ -37,6 +39,7 @@ else{
                                 </td>
 
                             </tr>
+                            }
                         }
                     </tbody>
                 </table>

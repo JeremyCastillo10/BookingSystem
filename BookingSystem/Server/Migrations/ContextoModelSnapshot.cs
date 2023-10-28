@@ -29,6 +29,9 @@ namespace BookingSystem.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("HorarioId"));
 
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Dia")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -40,6 +43,9 @@ namespace BookingSystem.Server.Migrations
                     b.Property<string>("HoraInicio")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Visible")
+                        .HasColumnType("bit");
 
                     b.HasKey("HorarioId");
 

@@ -8,7 +8,7 @@ namespace BookingSystem.Client.Repositorios
         List<Horario> Horarios { get; set; }
         Task<List<Horario>> GetHorario();
         Task<Horario> GetHorarioPorIdAsync(int id);
-        Task DeleteHorario(int id);
+        Task<bool> DeleteHorario(int id);
         Task CreateHorario(Horario horario);
     }
 }

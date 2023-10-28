@@ -18,7 +18,9 @@ namespace BookingSystem.Server.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Dia = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     HoraInicio = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    HoraFin = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    HoraFin = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Visible = table.Column<bool>(type: "bit", nullable: false),
+                    Deleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {

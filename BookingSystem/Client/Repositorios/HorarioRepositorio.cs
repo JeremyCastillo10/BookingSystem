@@ -1,4 +1,5 @@
-﻿using BookingSystem.Shared.Models;
+﻿using Azure;
+using BookingSystem.Shared.Models;
 using Newtonsoft.Json;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -27,21 +28,29 @@ namespace BookingSystem.Client.Repositorios
 
         }
 
-        public async Task DeleteHorario(int id)
+        public async Task<bool> DeleteHorario(int id)
         {
-            var response = await _http.DeleteAsync($"api/Horario/{id}");
-
-            if (!response.IsSuccessStatusCode)
+            try
             {
-                throw new Exception("Error al eliminar el horario.");
+                HttpResponseMessage response = await _http.DeleteAsync($"api/Horario/{id}"); // Ajusta la URL según tu API.
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
+
+
+
+
 
         public async Task<List<Horario>> GetHorario()
         {
             return await _http.GetFromJsonAsync<List<Horario>>("api/Horario");
 
         }
+       
 
         public async Task<Horario> GetHorarioPorIdAsync(int id)
         {

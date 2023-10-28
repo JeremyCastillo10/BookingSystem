@@ -1,4 +1,5 @@
 ﻿using BookingSystem.Server.Data;
+using BookingSystem.Shared;
 using BookingSystem.Shared.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -40,17 +41,23 @@ namespace BookingSystem.Server.Controllers
             await _contexto.SaveChangesAsync();
             return Ok(horario);
         }
-        [HttpDelete]
-        public async Task<ActionResult> DeleteHorario(int id)
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<bool>> DeleteHorario(int id)
         {
-            var horario = await _contexto.Horario.FirstOrDefaultAsync(h => h.HorarioId == id);
-            if(horario == null)
+            var dbhorario = await _contexto.Horario.FindAsync(id);
+            if (dbhorario == null)
             {
-                return BadRequest(horario);
+                return NotFound(); // Devuelve un 404 Not Found si el registro no existe.
             }
-            _contexto.Remove(horario);
+
+            // Marcar el campo "Visible" como false.
+            dbhorario.Visible = false;
+
             await _contexto.SaveChangesAsync();
-            return NoContent();
+
+            return Ok(true); 
         }
+
     }
 }
