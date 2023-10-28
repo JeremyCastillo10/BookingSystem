@@ -8,7 +8,7 @@ namespace BookingSystem.Server.Data
         public Contexto(DbContextOptions<Contexto> options):base(options) { }
 
         public DbSet<Horario> Horario { get; set; }
-        
+        public DbSet<Profesional> Profesional { get; set;}
 
     }
 }
