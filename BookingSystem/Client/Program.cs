@@ -1,5 +1,6 @@
 global using BookingSystem.Client.Repositorios;
 global using BookingSystem.Shared;
+global using System.Net.Http.Json;
 using BookingSystem.Client;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;

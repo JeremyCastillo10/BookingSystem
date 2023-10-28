@@ -25,13 +25,32 @@ namespace BookingSystem.Server.Controllers
             var horario = await _contexto.Horario.ToListAsync();
             return Ok(horario);
         }
+        [HttpGet("{id}")]
+        public ActionResult<Horario> GetHorarioPorId(int id)
+        {
+            var horario = _contexto.Horario.FirstOrDefault(h => h.HorarioId == id);
+            return Ok(horario);
+        }
 
         [HttpPost]
-        public async Task<ActionResult<Horario>> PostHorario(Horario horario)
+        [Route("Guardar")]
+        public async Task<ActionResult> PostHorario(Horario horario)
         {
             _contexto.Add(horario);
             await _contexto.SaveChangesAsync();
             return Ok(horario);
+        }
+        [HttpDelete]
+        public async Task<ActionResult> DeleteHorario(int id)
+        {
+            var horario = await _contexto.Horario.FirstOrDefaultAsync(h => h.HorarioId == id);
+            if(horario == null)
+            {
+                return BadRequest(horario);
+            }
+            _contexto.Remove(horario);
+            await _contexto.SaveChangesAsync();
+            return NoContent();
         }
     }
 }

@@ -1,0 +1,55 @@
+﻿@inject IHorarioRepositorio HorarioRepo
+
+
+@page "/C_Horarios"
+<h3>HorarioLista</h3>
+
+@if (horarios == null || horarios.Count() == 0)
+{
+    <p>Cargando...</p>
+}
+else{
+<div class="container p-3">
+            <div class="row pt-4">
+                <div class="col-6"></div>
+            </div>
+            <div class="container border">
+                <h2 class="text-primary">Lista de Horarios</h2>
+                <table class="table table-bordered table-striped" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Dia</th>
+                            <th width="30">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var hora in horarios)
+                        {
+                            <tr>
+                            <td>@hora.HorarioId</td>
+                                <td>@hora.Dia</td>
+                                <td class="text-center">
+                                    <div class="w-30 btn-group">
+                                        <a ><i class="fa-solid fa-pen-to-square"></i></a>
+                                    <a class="btn btn-sm btn-outline-primary oi oi-eye" href="R_Horarios/@hora.HorarioId">Ver</a>
+                                    </div>
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+     </div>
+    
+}
+@code {
+    private List<Horario> horarios = new List<Horario>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        horarios = await HorarioRepo.GetHorario();
+    }
+
+}
