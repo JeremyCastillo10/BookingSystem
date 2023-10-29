@@ -1,25 +1,23 @@
 ﻿@page "/R_Horarios"
 @page "/R_Horarios/{HorarioId:int}"
-@inject IMatToaster Toaster
 @inject IHorarioRepositorio HorarioRepo;
 <EditForm Model="horario" OnSubmit="Guardar">
     <div class="form-group row">
-
+        
 
         <div class="border p-3 w-75" style="margin: 0 auto; width: 50%;">
         <h2 class="text-info pl-3">Registro Horarios</h2>
         <div class="row">
         <div class="container">
-    <div class="mb-3">
-        <label>Id</label>
-        <InputNumber @bind-Value="horario.HorarioId" class="form-control" />
-    </div>
+                    <label>Id</label>
+                    <div class="mb-3 d-flex align-items-center">
+                        
+                        <div class="d-flex">
+                            <InputNumber @bind-Value="horario.HorarioId" class="form-control" />
+                            <MudIconButton Icon="@Icons.Material.Filled.Search" aria-label="Buscar" OnClick="Buscar" class="ml-2" />
+                        </div>
+                    </div>
     <div>
-        <button type="button"
-                class="btn btn-primary input-group-text oi oi-magnifying-glass"
-        @onclick="Buscar">
-            Buscar
-        </button>
     </div>
     <div class="mb-3">
         <label>Día</label>
@@ -48,8 +46,9 @@
             }
         </InputSelect>
     </div>
-    <button type="submit" class="btn btn-primary" >Guardar</button>
-    <button class="btn btn-danger" @onclick="Eliminar">Borrar</button>
+      <MudIconButton Icon="@Icons.Material.Filled.Save" aria-label="Guardar" ButtonType="ButtonType.Submit"></MudIconButton>
+      <MudIconButton Icon="@Icons.Material.Filled.Delete" aria-label="delete" OnClick="Eliminar"></MudIconButton>
+      
     </div>
         </div>
      </div>

@@ -2,7 +2,8 @@
 @inject IProfesionalRepositorio ProfesionalRepo;
 @inject IHorarioRepositorio HorarioRepo;
 
-<EditForm Model="Profesional" OnSubmit="Guardar">
+<EditForm Model="Profesional" OnValidSubmit="Guardar">
+    <DataAnnotationsValidator />
     <div class="form-group row">
         <div class="border p-3 w-75" style="margin: 0 auto; width: 50%;">
             <h2 class="text-info pl-3">Registro Profesionales</h2>
@@ -21,10 +22,12 @@
                     <div class="mb-3">
                         <label>Nombre</label>
                         <InputText @bind-Value="Profesional.NombreCompleto" class="form-control" />
+                        <ValidationMessage For="@(() => Profesional.NombreCompleto)" />
                     </div>
                     <div class="mb-3">
                         <label>Especialidad</label>
                         <InputText @bind-Value="Profesional.Especialidad" class="form-control" />
+                        <ValidationMessage For="@(() => Profesional.Especialidad)" />
                     </div>
                     <div class="mb-3">
                         <label>Horario</label>
