@@ -11,48 +11,48 @@ namespace BookingSystem.Server.Controllers
     [Route("api/[controller]")]
     [ApiController]
 
-    public class HorarioController : ControllerBase
+    public class ServicioController : ControllerBase
     {
         private readonly Contexto _contexto;
 
-        public HorarioController(Contexto contexto)
+        public ServicioController(Contexto contexto)
         {
             _contexto = contexto;
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Horario>>> GetHorario()
+        public async Task<ActionResult<List<Servicio>>> GetServicio()
         {
-            var horario = await _contexto.Horario.ToListAsync();
-            return Ok(horario);
+            var servicio = await _contexto.Servicio.ToListAsync();
+            return Ok(servicio);
         }
         [HttpGet("{id}")]
-        public ActionResult<Horario> GetHorarioPorId(int id)
+        public ActionResult<Servicio> GetServicioPorId(int id)
         {
-            var horario = _contexto.Horario.FirstOrDefault(h => h.HorarioId == id);
-            return Ok(horario);
+            var servicio = _contexto.Servicio.FirstOrDefault(h => h.ServicioId == id);
+            return Ok(servicio);
         }
 
         [HttpPost]
         [Route("Guardar")]
-        public async Task<ActionResult> PostHorario(Horario horario)
+        public async Task<ActionResult> PostServicio(Servicio servicio)
         {
-            _contexto.Add(horario);
+            _contexto.Add(servicio);
             await _contexto.SaveChangesAsync();
-            return Ok(horario);
+            return Ok(servicio);
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<bool>> DeleteHorario(int id)
+        public async Task<ActionResult<bool>> DeleteServicio(int id)
         {
-            var dbhorario = await _contexto.Horario.FindAsync(id);
-            if (dbhorario == null)
+            var dbservicio = await _contexto.Servicio.FindAsync(id);
+            if (dbservicio == null)
             {
                 return NotFound(); // Devuelve un 404 Not Found si el registro no existe.
             }
 
             // Marcar el campo "Visible" como false.
-            dbhorario.Visible = false;
+            dbservicio.Visible = false;
 
             await _contexto.SaveChangesAsync();
 

@@ -1,9 +1,9 @@
-﻿@inject IHorarioRepositorio HorarioRepo
+﻿@inject IServicioRepositorio ServicioRepo
 
 
-@page "/C_Horarios"
+@page "/C_Servicios"
 
-@if (horarios == null || horarios.Count() == 0)
+@if (servicios == null || servicios.Count() == 0)
 {
     <p>Cargando...</p>
 }
@@ -13,27 +13,31 @@ else{
                 <div class="col-6"></div>
             </div>
             <div class="container border">
-                <h2 class="text-primary">Lista de Horarios</h2>
+                <h2 class="text-primary">Lista de Servicios</h2>
                 <table class="table table-bordered table-striped" style="width:100%">
                     <thead>
                         <tr>
-                            <th>Id</th>
-                            <th>Dia</th>
+                            <th>Nombre</th>
+                            <th>Descripcion</th>
+                            <th>Duracion</th>
+                            <th>Precio</th>
                             <th width="30">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var hora in horarios)
+                        @foreach (var serv in servicios)
                         {
-                            if(hora.Visible == true)
+                            if(serv.Visible == true)
                             {
                             <tr>
-                            <td>@hora.HorarioId</td>
-                                <td>@hora.Dia</td>
+                                <td>@serv.Nombre</td>
+                                <td>@serv.Descripcion</td>
+                                <td>@serv.Duracion</td>
+                                <td>@serv.Precio</td>
                                 <td class="text-center">
                                     <div class="w-30 btn-group">
                                         <a ><i class="fa-solid fa-pen-to-square"></i></a>
-                                    <a class="btn btn-sm btn-outline-primary oi oi-eye" href="R_Horarios/@hora.HorarioId">Ver</a>
+                                        <a class="btn btn-sm btn-outline-primary oi oi-eye" href="R_Servicios/@serv.ServicioId">Ver</a>
                                     </div>
                                 </td>
 
@@ -47,11 +51,11 @@ else{
     
 }
 @code {
-    private List<Horario> horarios = new List<Horario>();
+    private List<Servicio> servicios = new List<Servicio>();
 
     protected override async Task OnInitializedAsync()
     {
-        horarios = await HorarioRepo.GetHorario();
+        servicios= await ServicioRepo.GetServicio();
     }
 
 }

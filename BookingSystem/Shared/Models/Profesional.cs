@@ -13,7 +13,6 @@ namespace BookingSystem.Shared.Models
 
         [Required(ErrorMessage = "Campo Obligatorio")]
         public string Especialidad { get; set; }
-        public int HorarioId { get; set; }
         public bool Estado { get; set; }
         public bool Visible { get; set; } = true;
 

@@ -1,47 +1,35 @@
 ﻿@page "/R_Profesionales"
+@page "/R_Profesionales/{ProfesionalId:int}"
 @inject IProfesionalRepositorio ProfesionalRepo;
-@inject IHorarioRepositorio HorarioRepo;
 
-<EditForm Model="Profesional" OnValidSubmit="Guardar">
+<EditForm Model="profesional" OnValidSubmit="Guardar">
     <DataAnnotationsValidator />
     <div class="form-group row">
         <div class="border p-3 w-75" style="margin: 0 auto; width: 50%;">
             <h2 class="text-info pl-3">Registro Profesionales</h2>
             <div class="row">
                 <div class="container">
-                    <div class="mb-3">
-                        <label>Id</label>
-                        <InputNumber @bind-Value="Profesional.ProfesionalId" class="form-control" />
-                    </div>
-                    <div>
-                        <button type="button"
-                                class="btn btn-primary input-group-text oi oi-magnifying-glass">
-                            Buscar
-                        </button>
+                    <label>Id</label>
+                    <div class="mb-3 d-flex align-items-center">
+                        <div class="d-flex">
+                            <InputNumber @bind-Value="profesional.ProfesionalId" class="form-control" />
+                            <MudIconButton Icon="@Icons.Material.Filled.Search" aria-label="Buscar" OnClick="Buscar" class="ml-2" />
+                        </div>
                     </div>
                     <div class="mb-3">
                         <label>Nombre</label>
-                        <InputText @bind-Value="Profesional.NombreCompleto" class="form-control" />
-                        <ValidationMessage For="@(() => Profesional.NombreCompleto)" />
+                        <InputText @bind-Value="profesional.NombreCompleto" class="form-control" />
+                        <ValidationMessage For="@(() => profesional.NombreCompleto)" />
                     </div>
                     <div class="mb-3">
                         <label>Especialidad</label>
-                        <InputText @bind-Value="Profesional.Especialidad" class="form-control" />
-                        <ValidationMessage For="@(() => Profesional.Especialidad)" />
-                    </div>
-                    <div class="mb-3">
-                        <label>Horario</label>
-                        <InputSelect @bind-Value="Profesional.HorarioId" class="form-select text-14">
-                            @foreach (var horario in  horarios)
-                            {
-                                <option value="@horario.HorarioId">@horario.Dia</option>
-                            }
-                        </InputSelect>
+                        <InputText @bind-Value="profesional.Especialidad" class="form-control" />
+                        <ValidationMessage For="@(() => profesional.Especialidad)" />
                     </div>
 
 
-                    <button type="submit" class="btn btn-primary">Guardar</button>
-                    <button class="btn btn-danger" >Borrar</button>
+                    <MudIconButton Icon="@Icons.Material.Filled.Save" aria-label="Guardar" ButtonType="ButtonType.Submit"></MudIconButton>
+                    <MudIconButton Icon="@Icons.Material.Filled.Delete" aria-label="delete" OnClick="Delete"></MudIconButton>
                 </div>
             </div>
         </div>
@@ -49,22 +37,43 @@
 </EditForm>
 
 @code {
-    public Profesional Profesional { get; set; } = new Profesional();
-    public List<Horario> horarios = new List<Horario>();
-    public int HorarioId { get; set; }
+    [Parameter]
+    public int ProfesionalId { get; set; }
+    
+    public bool eliminado { get; set; }
+    private Profesional profesional = new Profesional();
+
     protected override async Task OnInitializedAsync()
     {
-        horarios = await HorarioRepo.GetHorario();
+        if (ProfesionalId != 0)
+        {
+            profesional = await ProfesionalRepo.GetProfesionalPorIdAsync(ProfesionalId);
+        }
     }
 
     public async Task Guardar()
     {
-        await ProfesionalRepo.CreateProfesional(Profesional);
+        await ProfesionalRepo.CreateProfesional(profesional);
         Nuevo();
 
     }
     public void Nuevo()
     {
-        Profesional = new Profesional();
+        profesional = new Profesional();
+    }
+    public async Task Buscar()
+    {
+        profesional= await ProfesionalRepo.GetProfesionalPorIdAsync(profesional.ProfesionalId);
+    }
+    public async Task Delete()
+    {
+        if (profesional != null)
+        {
+            eliminado = await ProfesionalRepo.DeleteProfesional(profesional.ProfesionalId);
+            if (eliminado)
+            {
+                Nuevo();
+            }
+        }
     }
 }

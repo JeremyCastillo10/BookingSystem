@@ -12,7 +12,8 @@ namespace BookingSystem.Shared.Models
         public string Hora { get; set; }
         public string Duracion { get; set; }
         public bool Estado { get; set; }
-        
+        public int ClienteId { get; set; }
+
         public int ProfesionalId { get; set;}
         public int ServicioId { get; set; }
 

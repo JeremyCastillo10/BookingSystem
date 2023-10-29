@@ -21,34 +21,6 @@ namespace BookingSystem.Server.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("BookingSystem.Shared.Models.Horario", b =>
-                {
-                    b.Property<int>("HorarioId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("HorarioId"));
-
-                    b.Property<string>("Dia")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("HoraFin")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("HoraInicio")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Visible")
-                        .HasColumnType("bit");
-
-                    b.HasKey("HorarioId");
-
-                    b.ToTable("Horario");
-                });
-
             modelBuilder.Entity("BookingSystem.Shared.Models.Profesional", b =>
                 {
                     b.Property<int>("ProfesionalId")
@@ -64,9 +36,6 @@ namespace BookingSystem.Server.Migrations
                     b.Property<bool>("Estado")
                         .HasColumnType("bit");
 
-                    b.Property<int>("HorarioId")
-                        .HasColumnType("int");
-
                     b.Property<string>("NombreCompleto")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -77,6 +46,37 @@ namespace BookingSystem.Server.Migrations
                     b.HasKey("ProfesionalId");
 
                     b.ToTable("Profesional");
+                });
+
+            modelBuilder.Entity("BookingSystem.Shared.Models.Servicio", b =>
+                {
+                    b.Property<int>("ServicioId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ServicioId"));
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Duracion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Precio")
+                        .HasColumnType("float");
+
+                    b.Property<bool>("Visible")
+                        .HasColumnType("bit");
+
+                    b.HasKey("ServicioId");
+
+                    b.ToTable("Servicio");
                 });
 #pragma warning restore 612, 618
         }

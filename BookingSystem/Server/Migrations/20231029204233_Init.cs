@@ -11,22 +11,6 @@ namespace BookingSystem.Server.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Horario",
-                columns: table => new
-                {
-                    HorarioId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Dia = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    HoraInicio = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    HoraFin = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Visible = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Horario", x => x.HorarioId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Profesional",
                 columns: table => new
                 {
@@ -34,7 +18,6 @@ namespace BookingSystem.Server.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     NombreCompleto = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Especialidad = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    HorarioId = table.Column<int>(type: "int", nullable: false),
                     Estado = table.Column<bool>(type: "bit", nullable: false),
                     Visible = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -42,16 +25,33 @@ namespace BookingSystem.Server.Migrations
                 {
                     table.PrimaryKey("PK_Profesional", x => x.ProfesionalId);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Servicio",
+                columns: table => new
+                {
+                    ServicioId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Duracion = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Precio = table.Column<double>(type: "float", nullable: false),
+                    Visible = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Servicio", x => x.ServicioId);
+                });
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Horario");
+                name: "Profesional");
 
             migrationBuilder.DropTable(
-                name: "Profesional");
+                name: "Servicio");
         }
     }
 }

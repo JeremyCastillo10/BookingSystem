@@ -17,11 +17,7 @@ namespace BookingSystem.Shared.Models
         [MinLength(2, ErrorMessage = "Al menos {1} caractéres.")]
         public string Duracion { get; set; }
         [Required(ErrorMessage = "Campo obligatorio")]
-        [MinLength(2, ErrorMessage = "Al menos {1} caractéres.")]
         public double Precio { get; set; }
-        [Required(ErrorMessage = "Campo obligatorio")]
-        [MinLength(2, ErrorMessage = "Al menos {1} caractéres.")]
-        public int ProfesionalId { get; set; }
         public bool Visible { get; set; } = true;
     }
 }

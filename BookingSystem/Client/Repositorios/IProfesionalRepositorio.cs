@@ -6,5 +6,7 @@ namespace BookingSystem.Client.Repositorios
     {
         Task<List<Profesional>> GetProfesional();
         Task CreateProfesional(Profesional profesional);
+        Task<Profesional> GetProfesionalPorIdAsync(int id);
+        Task<bool> DeleteProfesional(int id);
     }
 }
