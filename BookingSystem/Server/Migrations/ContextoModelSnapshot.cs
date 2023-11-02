@@ -48,6 +48,25 @@ namespace BookingSystem.Server.Migrations
                     b.ToTable("Profesional");
                 });
 
+            modelBuilder.Entity("BookingSystem.Shared.Models.ProfesionalDetalle", b =>
+                {
+                    b.Property<int>("DetalleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DetalleId"));
+
+                    b.Property<int>("ProfesionalId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ServicioId")
+                        .HasColumnType("int");
+
+                    b.HasKey("DetalleId");
+
+                    b.ToTable("ProfesionalDetalle");
+                });
+
             modelBuilder.Entity("BookingSystem.Shared.Models.Servicio", b =>
                 {
                     b.Property<int>("ServicioId")

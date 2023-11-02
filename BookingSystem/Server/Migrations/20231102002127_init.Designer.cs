@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookingSystem.Server.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20231029204233_Init")]
-    partial class Init
+    [Migration("20231102002127_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -49,6 +49,25 @@ namespace BookingSystem.Server.Migrations
                     b.HasKey("ProfesionalId");
 
                     b.ToTable("Profesional");
+                });
+
+            modelBuilder.Entity("BookingSystem.Shared.Models.ProfesionalDetalle", b =>
+                {
+                    b.Property<int>("DetalleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DetalleId"));
+
+                    b.Property<int>("ProfesionalId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ServicioId")
+                        .HasColumnType("int");
+
+                    b.HasKey("DetalleId");
+
+                    b.ToTable("ProfesionalDetalle");
                 });
 
             modelBuilder.Entity("BookingSystem.Shared.Models.Servicio", b =>

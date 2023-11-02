@@ -9,6 +9,7 @@ namespace BookingSystem.Client.Repositorios
         Task<List<Servicio>> GetServicio();
         Task<Servicio> GetServicioPorIdAsync(int id);
         Task<bool> DeleteServicio(int id);
+        Task UpdateServicio(Servicio servicio);
         Task CreateServicio(Servicio servicio);
     }
 }

@@ -23,13 +23,13 @@ namespace BookingSystem.Server.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Servicio>>> GetServicio()
         {
-            var servicio = await _contexto.Servicio.ToListAsync();
+            var servicio = await _contexto.Servicio.Where(s => s.Visible == true).ToListAsync();
             return Ok(servicio);
         }
         [HttpGet("{id}")]
         public ActionResult<Servicio> GetServicioPorId(int id)
         {
-            var servicio = _contexto.Servicio.FirstOrDefault(h => h.ServicioId == id);
+            var servicio = _contexto.Servicio.FirstOrDefault(h => h.ServicioId == id && h.Visible == true);
             return Ok(servicio);
         }
 
@@ -48,16 +48,33 @@ namespace BookingSystem.Server.Controllers
             var dbservicio = await _contexto.Servicio.FindAsync(id);
             if (dbservicio == null)
             {
-                return NotFound(); // Devuelve un 404 Not Found si el registro no existe.
+                return NotFound(); 
             }
 
-            // Marcar el campo "Visible" como false.
             dbservicio.Visible = false;
 
             await _contexto.SaveChangesAsync();
 
             return Ok(true); 
         }
+        [HttpPut("{id}")]
+        public async Task<ActionResult> PutServicio(int id, Servicio servicio)
+        {
+            var servicioExiste = await ServicioExiste(id);
+            if(!servicioExiste)
+            {
+                return NotFound();
+            }
+            _contexto.Update(servicio);
+            await _contexto.SaveChangesAsync();
+            return Ok(true);
+        }
+
+        private async Task<bool> ServicioExiste(int id)
+        {
+            return await _contexto.Servicio.AnyAsync(s => s.ServicioId == id);
+        }
+
 
     }
 }

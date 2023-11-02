@@ -58,5 +58,10 @@ namespace BookingSystem.Client.Repositorios
             }
             return null;
         }
+
+        public async Task UpdateServicio(Servicio servicio)
+        {
+            var response = await _http.PutAsJsonAsync($"api/Servicio/{servicio.ServicioId}", servicio);
+        }
     }
 }

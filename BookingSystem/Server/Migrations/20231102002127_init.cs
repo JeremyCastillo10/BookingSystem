@@ -5,7 +5,7 @@
 namespace BookingSystem.Server.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -24,6 +24,20 @@ namespace BookingSystem.Server.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Profesional", x => x.ProfesionalId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProfesionalDetalle",
+                columns: table => new
+                {
+                    DetalleId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProfesionalId = table.Column<int>(type: "int", nullable: false),
+                    ServicioId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProfesionalDetalle", x => x.DetalleId);
                 });
 
             migrationBuilder.CreateTable(
@@ -49,6 +63,9 @@ namespace BookingSystem.Server.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Profesional");
+
+            migrationBuilder.DropTable(
+                name: "ProfesionalDetalle");
 
             migrationBuilder.DropTable(
                 name: "Servicio");

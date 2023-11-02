@@ -1,5 +1,7 @@
 ﻿@page "/C_Profesionales"
-@inject IProfesionalRepositorio ProfesionalRepo
+@inject IProfesionalRepositorio ProfesionalRepo;
+@inject IProfesionalDetalleRepositorio detallerepo;
+@inject IServicioRepositorio servicioRepo;
 
 
 @if (profesionales == null || profesionales.Count() == 0)
@@ -19,6 +21,7 @@ else
                     <tr>
                         <th>Nombre</th>
                         <th>Especialidad</th>
+                        <th>Servicio</th>
                         <th width="30">Action</th>
                     </tr>
                 </thead>
@@ -30,14 +33,28 @@ else
                             <tr>
                                 <td>@pro.NombreCompleto</td>
                                 <td>@pro.Especialidad</td>
+                                <td>
+                                    <ul>
+                                        @foreach (var detalle in ProfesionalesDetalles.Where(d => d.ProfesionalId == pro.ProfesionalId))
+                                        {
+                                            var servicio = servicios.FirstOrDefault(s => s.ServicioId == detalle.ServicioId);
+                                            if (servicio != null)
+                                            {
+                                                // Aquí muestras el nombre del servicio en lugar del ID
+                                                <li>@servicio.Nombre <MudIconButton Icon="@Icons.Material.Filled.Clear" aria-label="delete" OnClick="Remover"></MudIconButton></li>
+                                                
+                                            }
+                                        }
+                                    </ul>
+                                </td>
                                 <td class="text-center">
                                     <div class="w-30 btn-group">
                                         <a><i class="fa-solid fa-pen-to-square"></i></a>
                                         <a class="btn btn-sm btn-outline-primary oi oi-eye" href="R_Profesionales/@pro.ProfesionalId">Ver</a>
                                     </div>
                                 </td>
-
                             </tr>
+
                         }
                     }
                 </tbody>
@@ -48,11 +65,17 @@ else
 }
 @code {
     private List<Profesional> profesionales = new List<Profesional>();
+    private List<ProfesionalDetalle> ProfesionalesDetalles= new List<ProfesionalDetalle>();
+    private List<Servicio> servicios = new List<Servicio>();
 
     protected override async Task OnInitializedAsync()
     {
         profesionales = await ProfesionalRepo.GetProfesional();
+        ProfesionalesDetalles = await detallerepo.GetProfesionalDetalles();
+        servicios = await servicioRepo.GetServicio();
     }
+
+    public void Remover(){}
 
 }
 

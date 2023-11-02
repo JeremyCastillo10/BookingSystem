@@ -9,6 +9,6 @@ namespace BookingSystem.Server.Data
 
         public DbSet<Servicio> Servicio { get; set; }
         public DbSet<Profesional> Profesional { get; set;}
-
+        public DbSet<ProfesionalDetalle> ProfesionalDetalle { get; set; }
     }
 }
