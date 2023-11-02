@@ -1,5 +1,6 @@
 ﻿@page "/R_Servicios"
 @page "/R_Servicios/{ServicioId:int}"
+@inject SweetAlertService swal;
 @inject IServicioRepositorio ServicioRepo;
 <EditForm Model="servicio" OnValidSubmit="Guardar">
     <DataAnnotationsValidator />
@@ -71,11 +72,13 @@
         {
             await ServicioRepo.CreateServicio(servicio);
             Nuevo();
+            alert();
         }
         else
         {
             await ServicioRepo.UpdateServicio(servicio);
             Nuevo();
+            alert1();
         }
 
     }
@@ -90,9 +93,12 @@
 
         if (servicio!= null)
         {
+
             eliminado = await ServicioRepo.DeleteServicio(servicio.ServicioId);
+            alert3();
             if (eliminado)
             {
+
                 Nuevo();
             }
         }
@@ -101,5 +107,39 @@
     {
         servicio = new Servicio();
     }
-    
+    public async void alert()
+    {
+        var res = await swal.FireAsync(new SweetAlertOptions
+        {
+           Title = "Exito",
+           Text ="Guardado con exito!!!",
+           Icon = SweetAlertIcon.Success,
+           ConfirmButtonText ="OK"
+
+        });
+    }
+    public async void alert1()
+    {
+        var res = await swal.FireAsync(new SweetAlertOptions
+            {
+                Title = "Exito",
+                Text = "Editado con exito!!!",
+                Icon = SweetAlertIcon.Success,
+                ConfirmButtonText = "OK"
+
+            });
+    }
+    public async void alert3()
+    {
+        var res = await swal.FireAsync(new SweetAlertOptions
+            {
+                Title = "Estas Seguro?",
+                Text = "No podras revertirlo",
+                Icon = SweetAlertIcon.Warning,
+                ConfirmButtonText ="Si, Eliminar",
+                ShowCancelButton = true,
+                CancelButtonText="No"
+            });
+    }
+
 }
