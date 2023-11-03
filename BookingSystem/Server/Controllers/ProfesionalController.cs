@@ -47,8 +47,26 @@ namespace BookingSystem.Server.Controllers
             profesional.Visible = false;
             await _contexto.SaveChangesAsync();
             return Ok(profesional);
-            
+        
 
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> PutServicio(int id, Profesional profesional)
+        {
+            var Existe = await ProfesionalExiste(id);
+            if (!Existe)
+            {
+                return NotFound();
+            }
+            _contexto.Update(profesional);
+            await _contexto.SaveChangesAsync();
+            return Ok(true);
+        }
+
+        private async Task<bool> ProfesionalExiste(int id)
+        {
+            return await _contexto.Profesional.AnyAsync(s => s.ProfesionalId == id);
         }
     }
 }

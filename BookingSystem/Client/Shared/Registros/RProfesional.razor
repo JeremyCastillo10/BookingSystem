@@ -4,6 +4,7 @@
 @inject IServicioRepositorio ServicioRepo;
 @inject IProfesionalDetalleRepositorio DetalleRepo;
 @inject NavigationManager NavigationManager;
+@inject SweetAlertService swal;
 
 
     <MudCard Class="" style="width:35%; height:55%; position: absolute; top: 55%; left: 55%; transform: translate(-50%, -50%); background-color:mintcream">
@@ -58,12 +59,22 @@
     }
     public async Task Guardar()
     {
-        await ProfesionalRepo.CreateProfesional(profesional);
-        Nuevo();
-        IrAProfesionalDetalle();
-        
+        if (profesional.ProfesionalId == 0)
+        {
+            await ProfesionalRepo.CreateProfesional(profesional);
+            Nuevo();
+            alert();
+            IrAProfesionalDetalle();
+        }
+        else
+        {
+            await ProfesionalRepo.UpdateProfesional(profesional);
+            Nuevo();
+            alert1();
+        }
+
     }
-    
+
     public void Nuevo()
     {
         profesional = new Profesional();
@@ -73,6 +84,11 @@
         profesional= await ProfesionalRepo.GetProfesionalPorIdAsync(profesional.ProfesionalId);
     }
     public async Task Delete()
+    {
+        alert3();
+    }
+
+    public async Task Remove()
     {
         if (profesional != null)
         {
@@ -87,5 +103,44 @@
     {
         NavigationManager.NavigateTo("R_ProfesionalDetalle");
     }
-   
+    public async void alert()
+    {
+        var res = await swal.FireAsync(new SweetAlertOptions
+            {
+                Title = "Exito",
+                Text = "Guardado con exito!!!",
+                Icon = SweetAlertIcon.Success,
+                ConfirmButtonText = "OK"
+
+            });
+    }
+    public async void alert1()
+    {
+        var res = await swal.FireAsync(new SweetAlertOptions
+            {
+                Title = "Exito",
+                Text = "Editado con exito!!!",
+                Icon = SweetAlertIcon.Success,
+                ConfirmButtonText = "OK"
+
+            });
+    }
+    public async void alert3()
+    {
+        var res = await swal.FireAsync(new SweetAlertOptions
+            {
+                Title = "Estas Seguro?",
+                Text = "No podras revertirlo",
+                Icon = SweetAlertIcon.Warning,
+                ConfirmButtonText = "Si, Eliminar",
+                ShowCancelButton = true,
+                CancelButtonText = "No"
+            });
+        if (res.IsConfirmed)
+        {
+            await Remove();
+            Nuevo();
+        }
+    }
 }
+   

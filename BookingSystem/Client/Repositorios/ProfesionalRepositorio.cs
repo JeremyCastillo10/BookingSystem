@@ -39,5 +39,10 @@ namespace BookingSystem.Client.Repositorios
             }
             return null;
         }
+
+        public async Task UpdateProfesional(Profesional profesional)
+        {
+            var response = await _http.PutAsJsonAsync($"api/Profesional/{profesional.ProfesionalId}", profesional);
+        }
     }
 }
