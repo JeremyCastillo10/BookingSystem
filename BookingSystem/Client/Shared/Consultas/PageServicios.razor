@@ -10,20 +10,24 @@
     <div class="card">
         <div class="card-header" style="background-color:lightblue">
             <h3>Servicios</h3>
+                <button type="button" class="btn btn-flat-success" @onclick="Buscar">
+                    Agregar
+                </button>
         </div>
+            
         <div class="card-body">
             <form>
                 <div class="input-group d-flex align-items-end">
                     <div class="flex-fill mx-2">
                         <label>Filtro</label>
-                        <MudSelect class="form-control col-2" @bind-Value="Filtro">
+                        <MudSelect @bind-Value="Filtro">
                             <MudSelectItem Value=@("0")>Id</MudSelectItem>
                             <MudSelectItem Value=@("1")>Nombre</MudSelectItem>
                         </MudSelect>
                     </div>
                     <div class="flex-fill mx-2">
                         <label>Criterio</label>
-                        <MudTextField @bind-Value="Criterio" class="form-control" />
+                        <MudTextField @bind-Value="Criterio" />
                     </div>
                     <button type="button" class="btn btn-warning" @onclick="Buscar">
                         <i class="oi oi-magnifying-glass mr-2"> Buscar</i>

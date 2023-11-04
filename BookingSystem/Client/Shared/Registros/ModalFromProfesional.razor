@@ -1,43 +1,56 @@
-﻿@page "/R_Profesionales"
-@page "/R_Profesionales/{ProfesionalId:int}"
+﻿@page "/ModalProfesional"
 @inject IProfesionalRepositorio ProfesionalRepo;
 @inject IServicioRepositorio ServicioRepo;
 @inject IProfesionalDetalleRepositorio DetalleRepo;
 @inject NavigationManager NavigationManager;
 @inject SweetAlertService swal;
+@using BookingSystem.Client.Shared.Consultas
+
+    <Button Clicked="AbrirModal">Nuevo</Button>
+    <PageProfesionales />
+<EditForm Model="profesional" OnValidSubmit="Guardar">
+
+<Modal @ref="modalRef">
+    
+    <ModalContent Size="ModalSize.Large" Centered="true" >
+        
 
 
-    <MudCard Class="" style="width:35%; height:55%; position: absolute; top: 55%; left: 55%; transform: translate(-50%, -50%); background-color:mintcream">
-        <EditForm Model="profesional" OnValidSubmit="Guardar">
-        <MudCardContent>
-
-   
-    <DataAnnotationsValidator />
-                    <label>Id</label>
-                    <div class="mb-3 d-flex align-items-center">
-                        <div class="d-flex">
-                            <MudTextField @bind-Value="profesional.ProfesionalId" class="" />
-                            <MudIconButton Icon="@Icons.Material.Filled.Search" aria-label="Buscar" OnClick="Buscar" class="ml-2" />
-                        </div>
+            <DataAnnotationsValidator />
+            <ModalHeader>
+                <ModalTitle>Agregar</ModalTitle>
+                <CloseButton/>
+            </ModalHeader>
+            <ModalBody>
+                <label>Id</label>
+                <div class="mb-3">
+                    <div class="d-flex">
+                        <MudTextField @bind-Value="profesional.ProfesionalId" class="" />
+                        <MudIconButton Icon="@Icons.Material.Filled.Search" aria-label="Buscar" OnClick="Buscar" class="ml-2" />
                     </div>
-                    <div class="mb-3">
-                        <label>Nombre</label>
-                            <MudTextField @bind-Value="profesional.NombreCompleto" class="" />
-                        <ValidationMessage For="@(() => profesional.NombreCompleto)" />
-                    </div>
-                    <div class="mb-3">
-                        <label>Especialidad</label>
-                            <MudTextField @bind-Value="profesional.Especialidad" class="" />
-                        <ValidationMessage For="@(() => profesional.Especialidad)" />
-                    </div>
-            <MudIconButton Icon="@Icons.Material.Filled.Save" aria-label="Guardar" ButtonType="MudBlazor.ButtonType.Submit"></MudIconButton>
+                </div>
+                <div class="mb-3">
+                    <label>Nombre</label>
+                    <MudTextField @bind-Value="profesional.NombreCompleto" class="" />
+                    <ValidationMessage For="@(() => profesional.NombreCompleto)" />
+                </div>
+                <div class="mb-3">
+                    <label>Especialidad</label>
+                    <MudTextField @bind-Value="profesional.Especialidad" class="" />
+                    <ValidationMessage For="@(() => profesional.Especialidad)" />
+                </div>
+            </ModalBody>
+            <ModalFooter>
+                <MudIconButton Icon="@Icons.Material.Filled.Save" aria-label="Guardar" ButtonType="MudBlazor.ButtonType.Submit"></MudIconButton>
 
-                    <MudIconButton Icon="@Icons.Material.Filled.Delete" aria-label="delete" OnClick="Delete"></MudIconButton>
-        </MudCardContent>
-    </EditForm>
-    </MudCard>
-
-
+                <MudIconButton Icon="@Icons.Material.Filled.Delete" aria-label="delete" OnClick="Delete"></MudIconButton>
+            </ModalFooter>
+           
+       
+    </ModalContent>
+    
+</Modal>
+</EditForm>
 @code {
     [Parameter]
     public int ProfesionalId { get; set; }
@@ -46,7 +59,8 @@
     private ProfesionalDetalle profesionalDetalle = new ProfesionalDetalle();
     private List<ProfesionalDetalle> profesionalDetalles = new List<ProfesionalDetalle>();
     private List<Servicio> servicios = new List<Servicio>();
-    private List<Profesional> Profe = new List<Profesional>(); 
+    private List<Profesional> Profe = new List<Profesional>();
+    private Modal modalRef;
 
     protected override async Task OnInitializedAsync()
     {
@@ -64,7 +78,7 @@
             await ProfesionalRepo.CreateProfesional(profesional);
             Nuevo();
             alert();
-            IrAProfesionalDetalle();
+
         }
         else
         {
@@ -74,6 +88,14 @@
         }
 
     }
+    public void AbrirModal()
+    {
+        modalRef.Show();
+    }
+    public void CerrarModal()
+    {
+        modalRef.Close(CloseReason.None);
+    }
 
     public void Nuevo()
     {
@@ -81,13 +103,12 @@
     }
     public async Task Buscar()
     {
-        profesional= await ProfesionalRepo.GetProfesionalPorIdAsync(profesional.ProfesionalId);
+        profesional = await ProfesionalRepo.GetProfesionalPorIdAsync(profesional.ProfesionalId);
     }
     public async Task Delete()
     {
         alert3();
     }
-
     public async Task Remove()
     {
         if (profesional != null)
@@ -98,10 +119,6 @@
                 Nuevo();
             }
         }
-    }
-    private void IrAProfesionalDetalle()
-    {
-        NavigationManager.NavigateTo("R_ProfesionalDetalle");
     }
     public async void alert()
     {
@@ -143,4 +160,3 @@
         }
     }
 }
-   

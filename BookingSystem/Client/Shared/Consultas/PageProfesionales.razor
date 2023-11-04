@@ -1,30 +1,31 @@
-﻿@page "/PageProfesionales"
+﻿@inject IProfesionalRepositorio ProfesionalRepo;
+@inject IServicioRepositorio ServicioRepo;
+@inject IProfesionalDetalleRepositorio DetalleRepo;
+@using BookingSystem.Client.Shared.Registros
+@inject Modal modalRef;
 
-@inject IProfesionalRepositorio ProfesionalRepositorio
-@inject IProfesionalDetalleRepositorio detallerepo;
-@inject IServicioRepositorio servicioRepo;
-
-<MudCard>
+<CardBody>
 <EditForm Model="lista">
     <DataAnnotationsValidator />
         <div class="card">
             <div class="card-header" style="background-color:lightblue">
             <h3>Profesionales</h3>
-            <MudIconButton Icon="@Icons.Material.Filled.PersonAdd" aria-label="Guardar" Class="" ButtonType="ButtonType.Submit">Agregar</MudIconButton>
+
         </div>
+        <br/>
         <div class="card-body">
             <form>
                 <div class="input-group d-flex align-items-end">
                     <div class="flex-fill mx-2">
                         <label>Filtro</label>
-                        <MudSelect class="form-control col-2" @bind-Value="Filtro">
+                        <MudSelect @bind-Value="Filtro">
                                 <MudSelectItem Value=@("0")>Id</MudSelectItem>
                                 <MudSelectItem Value=@("1")>Especialidad</MudSelectItem>
                         </MudSelect>
                     </div>
                     <div class="flex-fill mx-2">
                         <label>Criterio</label>
-                        <MudTextField @bind-Value="Criterio" class="form-control" />
+                        <MudTextField @bind-Value="Criterio"/>
                     </div>
                     <button type="button" class="btn btn-warning" @onclick="Buscar">
                         <i class="oi oi-magnifying-glass mr-2"> Buscar</i>
@@ -70,6 +71,7 @@
                                 </div>
                             </td>
                         </tr>
+                            
 
                     }
                 }
@@ -77,7 +79,7 @@
         </table>
     </div>
 </EditForm>
-</MudCard>
+</CardBody>
 
 @code {
     public string? Filtro { get; set; }
@@ -86,19 +88,19 @@
     private List<ProfesionalDetalle> ProfesionalesDetalles = new List<ProfesionalDetalle>();
     private List<Servicio> servicios = new List<Servicio>();
 
+
     protected override async Task OnInitializedAsync()
     {
-        lista = await ProfesionalRepositorio.GetProfesional();
-        ProfesionalesDetalles = await detallerepo.GetProfesionalDetalles();
-        servicios = await servicioRepo.GetServicio();
+        lista = await ProfesionalRepo.GetProfesional();
+        ProfesionalesDetalles = await DetalleRepo.GetProfesionalDetalles();
+        servicios = await ServicioRepo.GetServicio();
     }
-
 
     private async Task Buscar()
     {
         if (Criterio != null)
         {
-            lista = await ProfesionalRepositorio.GetProfesional();
+            lista = await ProfesionalRepo.GetProfesional();
             switch (Filtro)
             {
                 case "0":
@@ -112,9 +114,10 @@
         }
         else
         {
-            lista = await ProfesionalRepositorio.GetProfesional();
+            lista = await ProfesionalRepo.GetProfesional();
         }
     }
+   
 
     public void Remover(){}
 

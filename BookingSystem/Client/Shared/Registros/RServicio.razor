@@ -40,7 +40,7 @@
                         <InputNumber @bind-Value="servicio.Precio" class="form-control" />
                         <ValidationMessage For="@(() => servicio.Precio)" />
                     </div>
-      <MudIconButton Icon="@Icons.Material.Filled.Save" aria-label="Guardar" ButtonType="ButtonType.Submit"></MudIconButton>
+      <MudIconButton Icon="@Icons.Material.Filled.Save" aria-label="Guardar" ButtonType="MudBlazor.ButtonType.Submit"></MudIconButton>
       <MudIconButton Icon="@Icons.Material.Filled.Delete" aria-label="delete" OnClick="Eliminar"></MudIconButton>
       
     </div>
