@@ -7,28 +7,21 @@
 @using BookingSystem.Client.Shared.Consultas
 
     <Button Clicked="AbrirModal">Nuevo</Button>
-    <PageProfesionales />
+    <ConsultaProfesionales />
 <EditForm Model="profesional" OnValidSubmit="Guardar">
 
 <Modal @ref="modalRef">
     
     <ModalContent Size="ModalSize.Large" Centered="true" >
         
-
-
             <DataAnnotationsValidator />
             <ModalHeader>
                 <ModalTitle>Agregar</ModalTitle>
                 <CloseButton/>
             </ModalHeader>
             <ModalBody>
-                <label>Id</label>
-                <div class="mb-3">
-                    <div class="d-flex">
-                        <MudTextField @bind-Value="profesional.ProfesionalId" class="" />
-                        <MudIconButton Icon="@Icons.Material.Filled.Search" aria-label="Buscar" OnClick="Buscar" class="ml-2" />
-                    </div>
-                </div>
+                <br/>
+                <MudTextField hidden @bind-Value="profesional.ProfesionalId" class="" />
                 <div class="mb-3">
                     <label>Nombre</label>
                     <MudTextField @bind-Value="profesional.NombreCompleto" class="" />
@@ -39,6 +32,7 @@
                     <MudTextField @bind-Value="profesional.Especialidad" class="" />
                     <ValidationMessage For="@(() => profesional.Especialidad)" />
                 </div>
+                
             </ModalBody>
             <ModalFooter>
                 <MudIconButton Icon="@Icons.Material.Filled.Save" aria-label="Guardar" ButtonType="MudBlazor.ButtonType.Submit"></MudIconButton>
@@ -60,7 +54,7 @@
     private List<ProfesionalDetalle> profesionalDetalles = new List<ProfesionalDetalle>();
     private List<Servicio> servicios = new List<Servicio>();
     private List<Profesional> Profe = new List<Profesional>();
-    private Modal modalRef;
+    public Modal modalRef;
 
     protected override async Task OnInitializedAsync()
     {
@@ -78,7 +72,7 @@
             await ProfesionalRepo.CreateProfesional(profesional);
             Nuevo();
             alert();
-
+            IrAProfesionalDetalle();
         }
         else
         {
@@ -105,9 +99,9 @@
     {
         profesional = await ProfesionalRepo.GetProfesionalPorIdAsync(profesional.ProfesionalId);
     }
-    public async Task Delete()
+    public  void Delete()
     {
-        alert3();
+         alert3();
     }
     public async Task Remove()
     {
@@ -158,5 +152,9 @@
             await Remove();
             Nuevo();
         }
+    }
+    private void IrAProfesionalDetalle()
+    {
+        NavigationManager.NavigateTo("R_ProfesionalDetalle");
     }
 }

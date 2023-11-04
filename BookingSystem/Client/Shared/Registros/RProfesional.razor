@@ -7,35 +7,37 @@
 @inject SweetAlertService swal;
 
 
-    <MudCard Class="" style="width:35%; height:55%; position: absolute; top: 55%; left: 55%; transform: translate(-50%, -50%); background-color:mintcream">
-        <EditForm Model="profesional" OnValidSubmit="Guardar">
-        <MudCardContent>
+<EditForm Model="profesional" OnValidSubmit="Guardar">
+
 
    
     <DataAnnotationsValidator />
-                    <label>Id</label>
-                    <div class="mb-3 d-flex align-items-center">
-                        <div class="d-flex">
-                            <MudTextField @bind-Value="profesional.ProfesionalId" class="" />
-                            <MudIconButton Icon="@Icons.Material.Filled.Search" aria-label="Buscar" OnClick="Buscar" class="ml-2" />
+    <div class="form-group row">
+   <div class="border p-3 w-75" style="margin: 0 auto; width: 50%;">
+        <h2 class="text-info pl-3">Registro Profesionales</h2>
+        <div class="row">
+        <div class="container">
+            <MudTextField hidden @bind-Value="profesional.ProfesionalId" class="" />
+            <div class="mb-3">
+                <label>Nombre</label>
+                <MudTextField @bind-Value="profesional.NombreCompleto" class="" />
+                <ValidationMessage For="@(() => profesional.NombreCompleto)" />
+            </div>
+            <div class="mb-3">
+                <label>Especialidad</label>
+                <MudTextField @bind-Value="profesional.Especialidad" class="" />
+                <ValidationMessage For="@(() => profesional.Especialidad)" />
+            </div>
+            <CardFooter>
+                <MudIconButton Icon="@Icons.Material.Filled.Save" aria-label="Guardar" ButtonType="MudBlazor.ButtonType.Submit"></MudIconButton>
+
+                <MudIconButton Icon="@Icons.Material.Filled.Delete" aria-label="delete" OnClick="Delete"></MudIconButton>
+            </CardFooter>
                         </div>
                     </div>
-                    <div class="mb-3">
-                        <label>Nombre</label>
-                            <MudTextField @bind-Value="profesional.NombreCompleto" class="" />
-                        <ValidationMessage For="@(() => profesional.NombreCompleto)" />
-                    </div>
-                    <div class="mb-3">
-                        <label>Especialidad</label>
-                            <MudTextField @bind-Value="profesional.Especialidad" class="" />
-                        <ValidationMessage For="@(() => profesional.Especialidad)" />
-                    </div>
-            <MudIconButton Icon="@Icons.Material.Filled.Save" aria-label="Guardar" ButtonType="MudBlazor.ButtonType.Submit"></MudIconButton>
-
-                    <MudIconButton Icon="@Icons.Material.Filled.Delete" aria-label="delete" OnClick="Delete"></MudIconButton>
-        </MudCardContent>
+                </div>
+            </div>
     </EditForm>
-    </MudCard>
 
 
 @code {
@@ -71,6 +73,7 @@
             await ProfesionalRepo.UpdateProfesional(profesional);
             Nuevo();
             alert1();
+            IrAProfesionalDetalle();
         }
 
     }
@@ -83,7 +86,7 @@
     {
         profesional= await ProfesionalRepo.GetProfesionalPorIdAsync(profesional.ProfesionalId);
     }
-    public async Task Delete()
+    public void Delete()
     {
         alert3();
     }

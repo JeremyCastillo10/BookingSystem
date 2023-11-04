@@ -10,34 +10,25 @@
         <div class="row">
         <div class="container">
 
-                    <label>Id</label>
-                    <div class="mb-3 d-flex align-items-center">   
-                        <div class="d-flex">
-                            <InputNumber @bind-Value="servicio.ServicioId" class="form-control" />
-                            <MudIconButton Icon="@Icons.Material.Filled.Search" aria-label="Buscar" OnClick="Buscar" class="ml-2" />
-                        </div>
-                    </div>
-
+                    <MudTextField hidden @bind-Value="servicio.ServicioId" class="" />
                     <div class="mb-3">
                         <label>Nombre</label>
-                        <InputText @bind-Value="servicio.Nombre" class="form-control" />
+                        <MudTextField @bind-Value="servicio.Nombre" class="" />
                         <ValidationMessage For="@(() => servicio.Nombre)" />
                     </div>
-
                     <div class="mb-3">
                         <label>Descripcion</label>
-                        <InputText @bind-Value="servicio.Descripcion" class="form-control" />
+                        <MudTextField @bind-Value="servicio.Descripcion" class="" />
                         <ValidationMessage For="@(() => servicio.Descripcion)" />
                     </div>
-
                     <div class="mb-3">
                         <label>Duracion</label>
-                        <InputText @bind-Value="servicio.Duracion" class="form-control" />
+                        <MudTextField @bind-Value="servicio.Duracion" class="" />
                         <ValidationMessage For="@(() => servicio.Duracion)" />
                     </div>
                     <div class="mb-3">
                         <label>Precio</label>
-                        <InputNumber @bind-Value="servicio.Precio" class="form-control" />
+                        <MudNumericField @bind-Value="servicio.Precio" class="" />
                         <ValidationMessage For="@(() => servicio.Precio)" />
                     </div>
       <MudIconButton Icon="@Icons.Material.Filled.Save" aria-label="Guardar" ButtonType="MudBlazor.ButtonType.Submit"></MudIconButton>
