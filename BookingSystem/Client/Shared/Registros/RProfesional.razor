@@ -28,6 +28,16 @@
                 <MudTextField @bind-Value="profesional.Especialidad" class="" />
                 <ValidationMessage For="@(() => profesional.Especialidad)" />
             </div>
+                    <div class="mb-3">
+                        <label>Telefono</label>
+                        <MudTextField @bind-Value="profesional.Telefono" class="" />
+                        <ValidationMessage For="@(() => profesional.Telefono)" />
+                    </div>
+                    <div class="mb-3">
+                        <label>Fecha Nacimiento</label>
+                        <InputDate @bind-Value="profesional.FechaNacimiento" class="" />
+                        <ValidationMessage For="@(() => profesional.FechaNacimiento)" />
+                    </div>
             <CardFooter>
                 <MudIconButton Icon="@Icons.Material.Filled.Save" aria-label="Guardar" ButtonType="MudBlazor.ButtonType.Submit"></MudIconButton>
 

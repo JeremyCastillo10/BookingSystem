@@ -56,8 +56,7 @@
                                         var servicio = servicios.FirstOrDefault(s => s.ServicioId == detalle.ServicioId);
                                         if (servicio != null)
                                         {
-                                            // Aquí muestras el nombre del servicio en lugar del ID
-                                            <li>@servicio.Nombre <MudIconButton Icon="@Icons.Material.Filled.Clear" aria-label="delete" OnClick="Remover"></MudIconButton></li>
+                                                <li>@servicio.Nombre <MudIconButton Icon="@Icons.Material.Filled.Clear" aria-label="delete" OnClick="() => Eliminarpro(detalle.DetalleId) "></MudIconButton></li>
 
                                         }
                                     }
@@ -83,9 +82,13 @@
 @code {
     public string? Filtro { get; set; }
     public string? Criterio { get; set; }
+    private int ProfesionalId { get; set; }
+    private ProfesionalDetalle profesional = new ProfesionalDetalle();
     public List<Profesional> lista { get; set; } = new List<Profesional>();
     private List<ProfesionalDetalle> ProfesionalesDetalles = new List<ProfesionalDetalle>();
     private List<Servicio> servicios = new List<Servicio>();
+    public bool eliminado { get; set; }
+
 
 
     protected override async Task OnInitializedAsync()
@@ -93,6 +96,10 @@
         lista = await ProfesionalRepo.GetProfesional();
         ProfesionalesDetalles = await DetalleRepo.GetProfesionalDetalles();
         servicios = await ServicioRepo.GetServicio();
+        if (ProfesionalId != 0)
+        {
+            profesional = await DetalleRepo.GetProfesionalDetallePorIdAsync(ProfesionalId);
+        }
     }
 
     private async Task Buscar()
@@ -116,8 +123,18 @@
             lista = await ProfesionalRepo.GetProfesional();
         }
     }
-   
 
-    public void Remover(){}
+
+    private async Task Eliminarpro(int detale)
+    {
+        if (profesional != null)
+        {
+            eliminado = await DetalleRepo.DeleteProfesionalDetalle(profesional.DetalleId);
+            if (eliminado)
+            {
+               
+            }
+        }
+    }
 
 }

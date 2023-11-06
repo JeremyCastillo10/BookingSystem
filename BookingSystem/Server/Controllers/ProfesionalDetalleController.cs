@@ -16,7 +16,7 @@ namespace BookingSystem.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetProfesionalDetalle()
+        public async Task<ActionResult<List<Profesional>>> GetProfesionalDetalle()
         {
             var obj = await _contexto.ProfesionalDetalle.ToListAsync();
             return Ok(obj);
@@ -31,10 +31,21 @@ namespace BookingSystem.Server.Controllers
         [Route("Guardar")]
         public async Task<IActionResult> PostProfesionalDetalle(ProfesionalDetalle profesionalDetalle)
         {
-             _contexto.Add(profesionalDetalle);
+            _contexto.Add(profesionalDetalle);
             await _contexto.SaveChangesAsync();
             return Ok();
         }
-
+        [HttpDelete("id")]
+        public async Task<ActionResult> DeleteProfesionalDetalle(int id)
+        {
+            var obj = await _contexto.ProfesionalDetalle.FindAsync(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            obj.Visible = false;
+            await _contexto.SaveChangesAsync();
+            return Ok();
+        }
     }
 }

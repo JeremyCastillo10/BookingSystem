@@ -12,8 +12,14 @@ namespace BookingSystem.Shared.Models
         public string NombreCompleto { get; set; }
 
         [Required(ErrorMessage = "Campo Obligatorio")]
+        public string Telefono { get; set; }
+
+        public DateTime? FechaNacimiento { get; set; }
+
+        public DateTime? FechaIngreso { get; set; } = DateTime.Now;
+
+        [Required(ErrorMessage = "Campo Obligatorio")]
         public string Especialidad { get; set; }
-        public bool Estado { get; set; }
         public bool Visible { get; set; } = true;
 
     }
