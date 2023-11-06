@@ -1,4 +1,5 @@
 ﻿using BookingSystem.Shared.Models;
+using Newtonsoft.Json;
 
 namespace BookingSystem.Client.Repositorios
 {
@@ -13,6 +14,24 @@ namespace BookingSystem.Client.Repositorios
         {
             var response = await _http.PostAsJsonAsync("api/ProfesionalDetalle/Guardar", profesionalDetalle);
             
+        }
+
+        public async Task<bool> DeleteProfesionalDetalle(int id)
+        {
+            var response = _http.DeleteAsync($"api/ProfesionalDetalle/{id}");
+            return response.IsCompletedSuccessfully;
+        }
+
+        public async Task<ProfesionalDetalle> GetProfesionalDetallePorIdAsync(int id)
+        {
+            var response = await _http.GetAsync($"api/ProfesionalDetalle/{id}");
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                var profesional = JsonConvert.DeserializeObject<ProfesionalDetalle>(content);
+                return profesional;
+            }
+            return null;
         }
 
         public async Task<List<ProfesionalDetalle>> GetProfesionalDetalles()
