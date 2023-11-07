@@ -1,7 +1,11 @@
-﻿namespace BookingSystem.Shared.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace BookingSystem.Shared.Models
 {
     public class Cliente
-    { 
+    {
+        [Key]
+        public int ClienteId { get; set; }
         public string NombreCompleto { get; set; }
         public string Email { get; set; }
         public string Ciudad { get; set; }

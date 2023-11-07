@@ -1,0 +1,37 @@
+﻿@page "/_AgendaTuCitaForm"
+<EditForm Model="cliente" OnValidSubmit="Guardar">
+    <card>
+        <div class="border p-3 w-50 mt-5" style="margin: 0 auto; width: 50%;">
+                    <MudTextField hidden @bind-Value="cliente.ClienteId" class="" />
+                    <div class="mb-3">
+                        <label>Nombre</label>
+                        <MudTextField @bind-Value="cliente.NombreCompleto" class="" />
+                    </div>
+                    <div class="mb-3">
+                        <label>Especialidad</label>
+                        <MudTextField @bind-Value="cliente.Email" class="" />
+                    </div>
+                    <div class="mb-3">
+                        <label>Telefono</label>
+                        <MudTextField @bind-Value="cliente.Telefono" class="" />
+ 
+                    </div>
+                    <div class="mb-3">
+                        <label>Fecha Nacimiento</label>
+                        <MudTextField @bind-Value="cliente.Ciudad" class="" />
+                    </div>
+                    <div class="mb-3">
+                        <label>Fecha Nacimiento</label>
+                        <MudTextField @bind-Value="cliente.Direccion" class="" />
+                    </div>
+                        <MudIconButton Icon="@Icons.Material.Filled.Save" aria-label="Guardar" ButtonType="MudBlazor.ButtonType.Submit"></MudIconButton>      
+    </div>
+    </card>
+</EditForm>
+@code{
+    public Cliente cliente { get; set; } = new Cliente();
+    public async Task Guardar()
+    {
+        
+    }
+}
